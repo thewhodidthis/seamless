@@ -49,16 +49,16 @@
     }
 
     async render(...assets) {
+      // Bail out quick
+      if (MediaSource.isTypeSupported(this.encoding) === false) {
+        throw Error('Unsupported mime type / codec')
+      }
+
       // Collect errors locally
       const promises = assets.map(asset => fetch(asset)
         .then(response => (response.ok ? response.arrayBuffer() : Promise.reject(response)))
         .catch(e => e)
       );
-
-      // Bail out quick
-      if (MediaSource.isTypeSupported(this.encoding) === false) {
-        throw Error('Unsupported mime type / codec')
-      }
 
       // Batch download
       const resultsMaybe = await Promise.all(promises);
