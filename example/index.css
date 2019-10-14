@@ -1,0 +1,39 @@
+html {
+  font: 16px/1.25 arial, sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+  display: flex;
+  margin: 0;
+  min-height: 100vh;
+  padding: 0.5rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+small {
+  font-size: 0.75rem;
+}
+
+p {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+figure {
+  margin: auto;
+  padding: 1.5rem 0 1rem;
+}
+
+figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+}

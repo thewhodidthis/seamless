@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>&middot; seamless &middot;</title>
+    <link rel="icon" href="https://example.thewhodidthis.com/favicon.ico">
+    <link rel="preload" href="bundle.js" as="script">
+    <link rel="preload" href="index.css" as="style">
+    <link rel="stylesheet" href="index.css">
+  </head>
+
+  <body>
+    <figure>
+      <video controls playinline is="very-seamless" height="360" width="640">
+        <very-seamless-clip src="assets/fragment-2.mp4" alt="assets/segment-2.ts"></very-seamless-clip>
+        <very-seamless-clip src="assets/fragment-1.mp4" alt="assets/segment-1.ts"></very-seamless-clip>
+        <very-seamless-clip src="assets/fragment-0.mp4" alt="assets/segment-0.ts"></very-seamless-clip>
+      </video>
+
+      <figcaption>
+        <p><strong><a href="https://github.com/thewhodidthis/seamless" title="Fork me on github">seamless.js</a></strong> Helps sequence clips on demand via MediaSource</p>
+      </figcaption>
+    </figure>
+
+    <script>
+      try {
+        customElements.define('is-ok', document.createElement('p').constructor, { extends: 'p' });
+      } catch (_) {
+        document.write('<script src="//unpkg.com/@ungap/custom-elements-builtin"><\x2fscript>');
+      }
+    </script>
+    <script src="bundle.js"></script>
+  </body>
+</html>

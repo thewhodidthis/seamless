@@ -1,0 +1,47 @@
+{
+  "name": "@thewhodidthis/seamless",
+  "version": "0.0.0",
+  "description": "Helps sequence clips on demand",
+  "main": "index",
+  "module": "index.mjs",
+  "homepage": "https://github.com/thewhodidthis/seamless#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thewhodidthis/seamless.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thewhodidthis/seamless/issues"
+  },
+  "scripts": {
+    "pretest": "eslint test.js",
+    "test": "rollup -c node:x -f iife test.js | kpow",
+    "prestart": "eslint index.mjs",
+    "start": "rollup -f cjs index.mjs > index.js",
+    "preexample": "eslint example/index.js",
+    "example": "cd example; rollup -f iife index.js > bundle.js"
+  },
+  "eslintConfig": {
+    "extends": "@thewhodidthis"
+  },
+  "engines": {
+    "node": ">=6.11.0",
+    "npm": ">=3.10.10"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@thewhodidthis/eslint-config": "latest",
+    "cutaway": "latest",
+    "eslint": "latest",
+    "kpow": "latest",
+    "rollup": "latest",
+    "rollup-config-x": "latest",
+    "tapeless": "latest"
+  },
+  "keywords": [
+    "seamless",
+    "video",
+    "mse"
+  ],
+  "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
+  "license": "Unlicense"
+}
