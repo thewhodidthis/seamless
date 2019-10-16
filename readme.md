@@ -1,6 +1,5 @@
 > Helps sequence clips on demand
 
-
 ### Setup
 ```sh
 # Fetch latest from github
@@ -11,20 +10,19 @@ npm i thewhodidthis/seamless
 ```js
 import { Seamless, SeamlessClip } from '@thewhodidthis/seamless'
 
-// Need builtin extends polyfill for Safari
+// Extends `HTMLVideoElement` built-in, Safari needs polyfilling
 const video = new Seamless()
 
 Array.from({ length: 4 })
-    .map((_, i) => `fragment-${i}.mp4`)
-    .forEach((src) => {
+    .forEach((_, i) => {
         const clip = new SeamlessClip()
 
-        clip.src = src
+        clip.src = `fragment-${i}.mp4`
 
         video.appendChild(clip)
     })
 
-// Attempt to create a composite clip once connected
+// Render via `connectedCallback`
 document.body.appendChild(video)
 ```
 
