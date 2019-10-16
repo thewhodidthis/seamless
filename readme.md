@@ -13,14 +13,13 @@ import { Seamless, SeamlessClip } from '@thewhodidthis/seamless'
 // Extends `HTMLVideoElement` built-in, Safari needs polyfilling
 const video = new Seamless()
 
-Array.from({ length: 4 })
-    .forEach((_, i) => {
-        const clip = new SeamlessClip()
+Array.from({ length: 4 }).forEach((_, i) => {
+    const clip = new SeamlessClip()
 
-        clip.src = `fragment-${i}.mp4`
+    clip.src = `fragment-${i}.mp4`
 
-        video.appendChild(clip)
-    })
+    video.appendChild(clip)
+})
 
 // Render via `connectedCallback`
 document.body.appendChild(video)
