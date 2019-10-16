@@ -12,7 +12,7 @@ try {
   customElements.define('very-seamless', Seamless)
 } catch (e) {
   ok
-    .describe('will define `&lt;just-seamless&gt;`')
+    .describe('will define `&lt;very-seamless&gt;`')
     .test(e)
 }
 
