@@ -14,10 +14,11 @@ source.setAttribute('type', blob.type)
 
 const video = document.querySelector('video')
 
-video.appendChild(source)
 video.addEventListener('error', (e) => {
   console.log('oops!', e.message)
 })
+
+video.appendChild(source)
 
 /* eslint func-style: warn */
 function createPlaylist(...list) {
@@ -25,12 +26,12 @@ function createPlaylist(...list) {
     // Get full path
     .map(item => document.location.href + item)
     // Add duration for each clip
-    .reduce((crop, item) => crop.concat('#EXTINF:10', item), [
+    .reduce((crop, item) => crop.concat('#EXTINF:1', item), [
       // Head
       '#EXTM3U',
       '#EXT-X-VERSION:3',
       '#EXT-X-MEDIA-SEQUENCE:0',
-      '#EXT-X-TARGETDURATION:10'
+      '#EXT-X-TARGETDURATION:2'
     ])
     // Foot
     .concat('#EXT-X-ENDLIST')
