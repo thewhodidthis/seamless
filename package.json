@@ -30,6 +30,7 @@
   "dependencies": {},
   "devDependencies": {
     "@thewhodidthis/eslint-config": "latest",
+    "@ungap/custom-elements-builtin": "latest",
     "cutaway": "latest",
     "eslint": "latest",
     "kpow": "latest",
