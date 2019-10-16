@@ -1,44 +1,67 @@
+import '@ungap/custom-elements-builtin'
 import 'cutaway'
 import { report, assert } from 'tapeless'
-import { Seamless } from './index.mjs'
+import { Seamless, SeamlessClip } from './index.mjs'
 
 const { ok, notOk, equal } = assert
 
 equal
-  .describe('will export default class')
+  .describe('will export')
   .test(typeof Seamless, 'function')
+  .test(typeof SeamlessClip, 'function')
 
 try {
-  customElements.define('very-seamless', Seamless)
+  customElements.define('very-seamless', Seamless, { extends: 'video' })
 } catch (e) {
   ok
     .describe('will define `&lt;very-seamless&gt;`')
     .test(e)
 }
 
+const video = document.createElement('video', { is: 'very-seamless' })
+
 ok
   .describe('tag known')
-  .test(document.createElement('very-seamless') instanceof HTMLElement)
+  .test(video instanceof HTMLElement)
 
 notOk
   .describe('tag not unknown')
-  .test(document.createElement('very-seamless') instanceof HTMLVideoElement)
+  .test(video instanceof HTMLUnknownElement)
 
-const obj = new Seamless()
+video.style.display = 'none'
+video.muted = 'muted'
+video.width = 320
+video.height = 240
 
-ok
-  .describe('will construct')
-  .test(obj instanceof Seamless)
+equal
+  .describe('will default encoding')
+  .test(video.encoding, 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"')
 
-const tag = document.createElement('very-seamless')
+Array.from({ length: 4 })
+  .map(() => 'https://cors-anywhere.herokuapp.com/https://github.com/thewhodidthis/seamless')
+  .map((a, i) => `${a}/raw/master/example/assets/fragment-${i}.mp4`)
+  .forEach((src) => {
+    const clip = new SeamlessClip()
 
-tag.style.display = 'none'
-tag.src = ''
+    clip.src = src
 
-document.body.appendChild(tag)
+    video.appendChild(clip)
+  })
 
-ok
-  .describe('will connect')
-  .test(tag.isConnected)
+document.body.appendChild(video)
 
-report()
+;(async () => {
+  try {
+    await video.play()
+
+    ok
+      .describe('will play')
+      .test(true)
+  } catch (e) {
+    ok
+      .describe('unable to trigger play')
+      .test(e instanceof Error)
+  } finally {
+    report()
+  }
+})()
