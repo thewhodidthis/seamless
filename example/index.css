@@ -1,13 +1,13 @@
 html {
   font: 16px/1.25 arial, sans-serif;
+  height: 100%;
 }
 
 body {
-  box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   margin: 0;
-  min-height: 100vh;
-  padding: 0.5rem;
+  min-height: 100%;
 }
 
 a {
@@ -30,6 +30,7 @@ p {
 
 figure {
   margin: auto;
+  max-width: 480px;
   padding: 1.5rem 0 1rem;
 }
 
@@ -38,3 +39,26 @@ figcaption {
   max-width: 18rem;
   text-align: center;
 }
+
+video {
+  display: block;
+}
+
+@media all and (max-width: 640px), all and (max-height: 500px) {
+  figure {
+    margin: 0;
+    padding: 0;
+  }
+
+  figcaption {
+    display: none;
+  }
+
+  video {
+    height: auto;
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+
