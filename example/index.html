@@ -2,14 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="description" content="Helps with MSE-based video concatenation">
     <title>&middot; seamless &middot;</title>
     <link rel="icon" href="https://example.thewhodidthis.com/favicon.ico">
     <link rel="dns-prefetch" href="//unpkg.com">
-    <link rel="preload" href="bundle.js" as="script">
     <link rel="preload" href="index.css" as="style">
     <link rel="stylesheet" href="index.css">
+    <script src="bundle.js" defer></script>
   </head>
-
   <body>
     <figure>
       <video controls playinline is="very-seamless" height="360" width="480">
@@ -20,12 +20,10 @@
         <very-seamless-clip src="assets/fragment-1.mp4" alt="assets/segment-1.ts"></very-seamless-clip>
         <very-seamless-clip src="assets/fragment-0.mp4" alt="assets/segment-0.ts"></very-seamless-clip>
       </video>
-
       <figcaption>
-        <p><strong><a href="https://github.com/thewhodidthis/seamless" title="Fork me on github">seamless.js</a></strong> Helps sequence clips on demand via MediaSource</p>
+        <p><strong><a href="https://github.com/thewhodidthis/seamless" title="Fork me on github">seamless.js</a></strong> Helps sequence clips on demand via MSE</p>
       </figcaption>
     </figure>
-
     <script>
       try {
         customElements.define('is-ok', document.createElement('p').constructor, { extends: 'p' });
@@ -33,6 +31,5 @@
         document.write('<script src="//unpkg.com/@ungap/custom-elements-builtin"><\x2fscript>');
       }
     </script>
-    <script src="bundle.js"></script>
   </body>
 </html>
