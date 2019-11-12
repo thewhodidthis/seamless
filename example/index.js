@@ -14,8 +14,8 @@ source.setAttribute('type', blob.type)
 
 const video = document.querySelector('video')
 
-video.addEventListener('error', (e) => {
-  console.log('oops!', e.message)
+video.addEventListener('error', ({ message = 'playback error' }) => {
+  console.log('oops!', message)
 })
 
 video.appendChild(source)
