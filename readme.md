@@ -40,6 +40,11 @@ ffmpeg -i input -c copy -map 0 -segment_time 1 -f segment -reset_timestamps 1 cl
 for f in clip-*.mp4; do mp4fragment --fragment-duration 1000 $f ${f%.mp4}-fragment.mp4; done
 ```
 
+### Test
+```sh
+npm i && npm t
+```
+
 ### References
 - [simpl.info/mse](https://simpl.info/mse)
 - [developers.google.com/web/fundamentals/media/mse/seamless-playback](https://developers.google.com/web/fundamentals/media/mse/seamless-playback)
