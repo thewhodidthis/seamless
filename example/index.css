@@ -19,10 +19,6 @@ a:hover {
   text-decoration: underline;
 }
 
-small {
-  font-size: 0.75rem;
-}
-
 p {
   font-size: 0.875rem;
   margin: 0;
@@ -31,7 +27,6 @@ p {
 figure {
   margin: auto;
   max-width: 480px;
-  padding: 1.5rem 0 1rem;
 }
 
 figcaption {
@@ -47,7 +42,6 @@ video {
 @media all and (max-width: 640px), all and (max-height: 500px) {
   figure {
     margin: 0;
-    padding: 0;
   }
 
   figcaption {
@@ -60,5 +54,3 @@ video {
     width: 100%;
   }
 }
-
-
