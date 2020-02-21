@@ -102,30 +102,25 @@
   window.customElements.define('very-seamless-clip', SeamlessClip);
   window.customElements.define('very-seamless', Seamless, { extends: 'video' });
 
-  const clips = document.querySelectorAll('very-seamless-clip[alt]');
-  const assets = Array.from(clips).map(o => o.getAttribute('alt'));
+  const host = document.querySelector('video');
+  const type = 'application/x-mpegURL';
 
-  const blob = createPlaylist(...assets);
-  const src = window.URL.createObjectURL(blob);
+  if (host.canPlayType(type)) {
+    const observer = new MutationObserver((mutations) => {
+      const isReady = mutations.some(m => m.attributeName === 'src');
 
-  // Safari: need append a `<source>` element instead of setting the video `src` attribute
-  const source = document.createElement('source');
+      // Non MSE browser most likely
+      if (isReady) {
+        host.removeAttribute('src');
+      }
+    });
 
-  source.setAttribute('src', src);
-  source.setAttribute('type', blob.type);
+    observer.observe(host, { attributeFilter: ['src'] });
 
-  const video = document.querySelector('video');
-
-  video.addEventListener('error', ({ message = 'playback error' }) => {
-    console.log('oops!', message);
-  });
-
-  video.appendChild(source);
-
-  /* eslint func-style: warn */
-  function createPlaylist(...list) {
-    const data = list
+    const list = document.querySelectorAll('very-seamless-clip[alt]');
+    const data = Array.from(list)
       // Get full path
+      .map(clip => clip.getAttribute('alt'))
       .map(item => document.location.href + item)
       // Add duration for each clip
       .reduce((crop, item) => crop.concat('#EXTINF:1', item), [
@@ -139,7 +134,20 @@
       .concat('#EXT-X-ENDLIST')
       .join('\n');
 
-    return new Blob([data], { type: 'application/x-mpegURL' })
+    const blob = new Blob([data], { type });
+    const src = window.URL.createObjectURL(blob);
+
+    // Safari: need append a `<source>` element instead of setting the video `src` attribute
+    const source = document.createElement('source');
+
+    source.setAttribute('type', type);
+    source.setAttribute('src', src);
+
+    host.appendChild(source);
   }
+
+  host.addEventListener('error', ({ message = 'playback error' }) => {
+    console.log('oops!', message);
+  });
 
 }());
