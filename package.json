@@ -1,6 +1,7 @@
 {
   "name": "@thewhodidthis/seamless",
   "version": "0.0.2",
+  "private": true,
   "description": "Helps sequence clips on demand",
   "keywords": [
     "seamless",
