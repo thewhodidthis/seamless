@@ -1,12 +1,14 @@
 > Helps sequence clips on demand
 
 ### Setup
+
 ```sh
 # Fetch latest from github
 npm i thewhodidthis/seamless
 ```
 
 ### Usage
+
 ```js
 import { Seamless, SeamlessClip } from '@thewhodidthis/seamless'
 
@@ -25,6 +27,7 @@ document.body.appendChild(video)
 ```
 
 ### Encoding
+
 ```sh
 # Add keyframes for segmenting, eg. every second
 # https://superuser.com/questions/908280/what-is-the-correct-way-to-fix-keyframes-in-ffmpeg-for-dash
@@ -41,11 +44,13 @@ for f in clip-*.mp4; do mp4fragment --fragment-duration 1000 $f ${f%.mp4}-fragme
 ```
 
 ### Test
+
 ```sh
 npm i && npm t
 ```
 
 ### Context
+
 - https://simpl.info/mse[simpl.info/mse]
 - https://developers.google.com/web/fundamentals/media/mse/seamless-playback[developers.google.com/web/fundamentals/media/mse/seamless-playback]
 - https://github.com/w3c/media-source/issues/190[github.com/w3c/media-source/issues/190]
