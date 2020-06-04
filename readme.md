@@ -7,7 +7,7 @@ Helps sequence clips on demand.
 Fetch latest from GitHub directly:
 
 ```sh
-npm i thewhodidthis/seamless
+npm install thewhodidthis/seamless
 ```
 
 ## usage
