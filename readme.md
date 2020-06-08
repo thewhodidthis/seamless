@@ -31,9 +31,7 @@ for (let i = 0; i < 4; i += 1) {
 document.body.appendChild(video)
 ```
 
-## notes
-
-Proper encoding is half the work.
+Proper encoding is half the work. For example,
 
 ```sh
 # Add keyframes for segmenting, eg. every second
@@ -52,6 +50,6 @@ for f in clip-*.mp4; do mp4fragment --fragment-duration 1000 $f ${f%.mp4}-fragme
 
 ## see also
 
-- https://simpl.info/mse[simpl.info/mse]
-- https://developers.google.com/web/fundamentals/media/mse/seamless-playback[developers.google.com/web/fundamentals/media/mse/seamless-playback]
-- https://github.com/w3c/media-source/issues/190[github.com/w3c/media-source/issues/190]
+- [simpl.info/mse](https://simpl.info/mse)
+- [developers.google.com/web/fundamentals/media/mse/seamless-playback](https://developers.google.com/web/fundamentals/media/mse/seamless-playback)
+- [github.com/w3c/media-source/issues/190](https://github.com/w3c/media-source/issues/190)
