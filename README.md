@@ -4,7 +4,7 @@ Helps sequence clips on demand.
 
 ## setup
 
-Fetch latest from GitHub directly:
+Download from GitHub directly:
 
 ```sh
 npm install thewhodidthis/seamless
@@ -15,7 +15,7 @@ npm install thewhodidthis/seamless
 Instantiate a customized `<video>` element fed with seamless tracks.
 
 ```js
-import { Seamless, SeamlessClip } from '@thewhodidthis/seamless'
+import { Seamless, SeamlessClip } from "@thewhodidthis/seamless"
 
 // Extends `HTMLVideoElement` built-in, Safari needs polyfilling
 const video = new Seamless()
@@ -23,7 +23,7 @@ const video = new Seamless()
 for (let i = 0; i < 4; i += 1) {
   const clip = new SeamlessClip()
 
-  clip.setAttribute('src', `fragment-${i}.mp4`)
+  clip.setAttribute("src", `fragment-${i}.mp4`)
   video.appendChild(clip)
 }
 
