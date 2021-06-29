@@ -1,153 +1,99 @@
-(function () {
-  'use strict';
-
-  class SeamlessClip extends HTMLElement {
+(() => {
+  // ../main.js
+  var SeamlessClip = class extends HTMLElement {
     get src() {
-      return this.getAttribute('src')
+      return this.getAttribute("src");
     }
-
     set src(v) {
       if (v) {
-        this.setAttribute('src', v);
+        this.setAttribute("src", v);
       }
     }
-  }
-
-  class Seamless extends HTMLVideoElement {
+  };
+  var Seamless = class extends HTMLVideoElement {
     get encoding() {
-      if (this.hasAttribute('encoding')) {
-        return this.getAttribute('encoding')
+      if (this.hasAttribute("encoding")) {
+        return this.getAttribute("encoding");
       }
-
-      // A bit of a pain the codec part, another option might be
-      // 'video/webm; codecs="vorbis, vp8"'
-      return 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
+      return 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
     }
-
     set encoding(v) {
       if (v) {
-        this.setAttribute('encoding', v);
+        this.setAttribute("encoding", v);
       }
     }
-
     connectedCallback() {
-      const name = this.hasAttribute('is') ? this.getAttribute('is') : 'very-seamless';
-
-      // Allow for attaching event listeners in time
+      const name = this.hasAttribute("is") ? this.getAttribute("is") : "very-seamless";
       window.customElements.whenDefined(name).then(() => {
-        // Make sure fetching avoided unless tag has context
         if (this.isConnected) {
-          // Collect `src` urls, tracks only
           const children = this.querySelectorAll(`${name}-clip[src]`);
-          const assets = Array.from(children).map(o => o.getAttribute('src'));
-
+          const assets = Array.from(children).map((o) => o.getAttribute("src"));
           this.render(...assets).catch(({ message }) => {
-            const error = new ErrorEvent('error', { message });
-
+            const error = new ErrorEvent("error", { message });
             this.dispatchEvent(error);
           });
         }
       });
     }
-
     async render(...assets) {
-      // Bail out quick
       if (MediaSource.isTypeSupported(this.encoding) === false) {
-        throw MediaError({ code: 3, message: 'Unsupported mime type / codec' })
+        throw MediaError({ code: 3, message: "Unsupported mime type / codec" });
       }
-
       const mediaSource = new MediaSource();
-
-      // Collect errors locally
-      const promises = assets.map(asset => fetch(asset)
-        .then(response => (response.ok ? response.arrayBuffer() : Promise.reject(response)))
-        .catch(e => e)
-      );
-
-      // Batch download
+      const promises = assets.map((asset) => fetch(asset).then((response) => response.ok ? response.arrayBuffer() : Promise.reject(response)).catch((e) => e));
       const resultsMaybe = await Promise.all(promises);
-      const results = resultsMaybe.filter(o => !(o instanceof Error)).map(o => new Uint8Array(o));
-
+      const results = resultsMaybe.filter((o) => !(o instanceof Error)).map((o) => new Uint8Array(o));
       if (results.length === 0) {
-        throw MediaError({ code: 4, message: 'Nothing to play back' })
+        throw MediaError({ code: 4, message: "Nothing to play back" });
       }
-
-      mediaSource.addEventListener('sourceopen', () => {
+      mediaSource.addEventListener("sourceopen", () => {
         const sourceBuffer = mediaSource.addSourceBuffer(this.encoding);
         const { mode } = sourceBuffer;
-
-        if (mode === 'segments') {
-          sourceBuffer.mode = 'sequence';
+        if (mode === "segments") {
+          sourceBuffer.mode = "sequence";
         }
-
         sourceBuffer.appendBuffer(results.shift());
-        sourceBuffer.addEventListener('updateend', () => {
+        sourceBuffer.addEventListener("updateend", () => {
           if (results.length) {
             sourceBuffer.appendBuffer(results.shift());
-          } else if (mediaSource.readyState === 'open' && sourceBuffer.updating === false) {
+          } else if (mediaSource.readyState === "open" && sourceBuffer.updating === false) {
             mediaSource.endOfStream();
           }
         });
-
         window.URL.revokeObjectURL(this.src);
       }, { once: true });
-
-      // This makes Safari flicker on first play. Using a source element seemed to help, but
-      // somehow won't trigger the `sourceopen` event, which however Safari
-      // don't need for playback anyway? Autoplay related maybe?
       this.src = window.URL.createObjectURL(mediaSource);
     }
-  }
+  };
+  window.customElements.define("very-seamless-clip", SeamlessClip);
+  window.customElements.define("very-seamless", Seamless, { extends: "video" });
 
-  window.customElements.define('very-seamless-clip', SeamlessClip);
-  window.customElements.define('very-seamless', Seamless, { extends: 'video' });
-
-  const host = document.querySelector('video');
-  const type = 'application/x-mpegURL';
-
+  // index.js
+  var host = document.querySelector("video");
+  var type = "application/x-mpegURL";
   if (host.canPlayType(type)) {
     const observer = new MutationObserver((mutations) => {
-      const isReady = mutations.some(m => m.attributeName === 'src');
-
-      // Non MSE browser most likely
+      const isReady = mutations.some((m) => m.attributeName === "src");
       if (isReady) {
-        host.removeAttribute('src');
+        host.removeAttribute("src");
       }
     });
-
-    observer.observe(host, { attributeFilter: ['src'] });
-
-    const list = document.querySelectorAll('very-seamless-clip[alt]');
-    const data = Array.from(list)
-      // Get full path
-      .map(clip => clip.getAttribute('alt'))
-      .map(item => document.location.href + item)
-      // Add duration for each clip
-      .reduce((crop, item) => crop.concat('#EXTINF:1', item), [
-        // Head
-        '#EXTM3U',
-        '#EXT-X-VERSION:3',
-        '#EXT-X-MEDIA-SEQUENCE:0',
-        '#EXT-X-TARGETDURATION:2'
-      ])
-      // Foot
-      .concat('#EXT-X-ENDLIST')
-      .join('\n');
-
+    observer.observe(host, { attributeFilter: ["src"] });
+    const list = document.querySelectorAll("very-seamless-clip[alt]");
+    const data = Array.from(list).map((clip) => clip.getAttribute("alt")).map((item) => document.location.href + item).reduce((crop, item) => crop.concat("#EXTINF:1", item), [
+      "#EXTM3U",
+      "#EXT-X-VERSION:3",
+      "#EXT-X-MEDIA-SEQUENCE:0",
+      "#EXT-X-TARGETDURATION:2"
+    ]).concat("#EXT-X-ENDLIST").join("\n");
     const blob = new Blob([data], { type });
     const src = window.URL.createObjectURL(blob);
-
-    // Safari: need append a `<source>` element instead of setting the video `src` attribute
-    const source = document.createElement('source');
-
-    source.setAttribute('type', type);
-    source.setAttribute('src', src);
-
+    const source = document.createElement("source");
+    source.setAttribute("type", type);
+    source.setAttribute("src", src);
     host.appendChild(source);
   }
-
-  host.addEventListener('error', ({ message = 'playback error' }) => {
-    console.log('oops!', message);
+  host.addEventListener("error", ({ message = "playback error" }) => {
+    console.log("oops!", message);
   });
-
-}());
+})();
