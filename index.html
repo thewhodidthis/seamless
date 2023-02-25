@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Helps with MSE based video concatenation.">
+    <title>seamless.js</title>
+    <link rel="dns-prefetch" href="//unpkg.com">
+    <script src="example.js" type="module"></script>
+    <style>
+      html {
+        font: medium/normal sans-serif;
+        height: 100%;
+      }
+      body {
+        display: grid;
+        margin: 0;
+        min-height: 100%;
+        place-items: center;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      p {
+        text-align: center;
+      }
+      figcaption {
+        font-size: small;
+      }
+      figure {
+        aspect-ratio: 4 / 3;
+        margin: auto;
+        max-width: 30rem;
+        width: 100%;
+      }
+      video {
+        background: black center/cover no-repeat;
+        height: 100%;
+        object-fit: fill;
+        vertical-align: middle;
+        width: 100%;
+      }
+      @media all and (max-width: 480px) and (max-height: 360px) {
+         figcaption {
+           display: none;
+         }
+       }
+    </style>
+  </head>
+  <body>
+    <figure>
+      <video controls playinline is="very-seamless" poster="poster.png" height="360" width="480">
+        <very-seamless-clip src="fragment-5.mp4" alt="segment-5.ts"></very-seamless-clip>
+        <very-seamless-clip src="fragment-4.mp4" alt="segment-4.ts"></very-seamless-clip>
+        <very-seamless-clip src="fragment-3.mp4" alt="segment-3.ts"></very-seamless-clip>
+        <very-seamless-clip src="fragment-2.mp4" alt="segment-2.ts"></very-seamless-clip>
+        <very-seamless-clip src="fragment-1.mp4" alt="segment-1.ts"></very-seamless-clip>
+        <very-seamless-clip src="fragment-0.mp4" alt="segment-0.ts"></very-seamless-clip>
+      </video>
+      <figcaption>
+        <p><strong><a href="https://github.com/thewhodidthis/seamless">seamless.js</a></strong> Helps sequence clips on demand via MSE</p>
+      </figcaption>
+    </figure>
+    <script>
+      try {
+        customElements.define("is-ok", document.createElement("p").constructor, { extends: "p" });
+      } catch (_) {
+        document.write(`<script src="//unpkg.com/@ungap/custom-elements-builtin"><\/script>`);
+      }
+    </script>
+  </body>
+</html>

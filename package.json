@@ -1,0 +1,18 @@
+{
+  "name": "@thewhodidthis/seamless",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Helps sequence clips on demand",
+  "homepage": "https://github.com/thewhodidthis/seamless#readme",
+  "bugs": "https://github.com/thewhodidthis/seamless/issues",
+  "repository": "github:thewhodidthis/seamless",
+  "license": "ISC",
+  "author": "Thepersonwhodidthis <thewhodidthis@fastmail.com> (http://thewhodidthis.com/)",
+  "engines": {
+    "node": ">=18.14.0",
+    "npm": ">=9.2.1"
+  },
+  "browser": "./main.js",
+  "type": "module",
+  "exports": "./main.js"
+}
