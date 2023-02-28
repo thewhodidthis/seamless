@@ -15,7 +15,6 @@
         display: grid;
         margin: 0;
         min-height: 100%;
-        place-items: center;
       }
       a {
         color: inherit;
@@ -28,26 +27,25 @@
         text-align: center;
       }
       figcaption {
-        font-size: small;
+        margin: 0 2.25rem 0 0.75rem;
       }
       figure {
-        aspect-ratio: 4 / 3;
+        font-size: small;
         margin: auto;
-        max-width: 30rem;
-        width: 100%;
       }
       video {
-        background: black center/cover no-repeat;
+        aspect-ratio: 4 / 3;
+        background: white center/cover no-repeat;
+        display: block;
         height: 100%;
-        object-fit: fill;
-        vertical-align: middle;
-        width: 100%;
+        object-fit: cover;
+        max-width: 100%;
       }
       @media all and (max-width: 480px) and (max-height: 360px) {
-         figcaption {
-           display: none;
-         }
-       }
+        figcaption {
+          display: none;
+        }
+      }
     </style>
   </head>
   <body>
